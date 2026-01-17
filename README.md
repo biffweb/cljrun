@@ -16,8 +16,8 @@ I also wanted a solution that:
 I currently only use cljrun in Biff projects, so the bundle of tasks there is largely Biff-specific.
 However I also like the idea of providing a more "vanilla" bundle of default tasks that could be
 useful more broadly in non-Biff projects. (e.g. there could be tasks for creating new projects,
-running tests, building jars, publishing to clojars...). Maybe I'll do that before publicly
-announcing this tool.
+running tests, updating deps, building jars, publishing to clojars...). Maybe I'll do that before
+publicly announcing this tool.
 
 ## Demo
 
@@ -65,7 +65,7 @@ above:
 ```
 
 Then you can do `clj -M:run my-task` to run the task, or `clj -M:run -h` to see the available tasks.
-For extra ergonomics you can put `alias cljrun='clj -M:run` in your `.bashrc`.
+For extra ergonomics you can put `alias cljrun='clj -M:run'` in your `.bashrc`.
 
 I generally define the `:run` alias in my project `deps.edn` files, but you could also stick it in
 `~/.clojure/deps.edn`.
