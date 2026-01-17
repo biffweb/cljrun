@@ -28,7 +28,8 @@
     (println doc)))
 
 (defn run-task [task-name & args]
-  (let [task-fn (requiring-resolve (get tasks task-name))]
+  (let [task-fn (some-> (get tasks task-name)
+                        requiring-resolve)]
     (cond
       (nil? task-fn)
       (binding [*out* *err*]
@@ -41,14 +42,15 @@
       :else
       (apply task-fn args))))
 
-(defn -main
-  ([tasks-sym]
-   (-main tasks-sym "--help"))
-  ([tasks-sym task-name & args]
-   (let [tasks @(requiring-resolve (symbol tasks-sym))]
-     (if (contains? #{"help" "--help" "-h" nil} task-name)
-       (print-help tasks)
-       (do
-         (alter-var-root #'tasks (constantly tasks))
-         (apply run-task task-name args)))
-     (shutdown-agents))))
+(defn -main [& args]
+  (let [[task-strs [_ task-name & args]] (split-with (complement #{"--"}) args)
+        tasks (->> task-strs
+                   (mapv (fn [task-str]
+                           @(requiring-resolve (symbol task-str))))
+                   (apply merge))]
+    (if (contains? #{"help" "--help" "-h" nil} task-name)
+      (print-help tasks)
+      (do
+        (alter-var-root #'tasks (constantly tasks))
+        (apply run-task task-name args)))
+    (shutdown-agents)))
