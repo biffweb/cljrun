@@ -54,7 +54,7 @@ above:
 
 ```clojure
 ;; :run is used as the alias by convention
-:aliases {:run {:extra-deps {io.github.biffweb/cljrun {:git/tag "v1.0" :git/sha "abc1234"}
+:aliases {:run {:extra-deps {io.github.biffweb/cljrun {:git/tag "v1.0" :git/sha "f10b128"}
                              ;; If your tasks are defined in a library, add it here:
                              com.example/tasks {:mvn/version "1.0"}}
                 ;; If your tasks are defined in the current project, make sure they're on the
